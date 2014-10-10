@@ -1,30 +1,20 @@
 #!/usr/local/bin/gosh
 
-(define (new-if predicate then-clause else-clause)
-  (cond (predicate then-clause)
-	(else else-clause)))
-
 (define (average x y)
   (/ (+ x y) 2))
 
 (define (improve guess x)
-  (average guess (/ x guess)))
+  (/ (+ (/ x (* guess guess)) (* 2 guess)) 3))
 
 (define (good-enough? guess x)
-  (< (abs (- (square guess) x)) 0.001))
+  (< (abs (- (* guess guess guess) x)) 0.001))
 
-;(define (sqrt-iter guess x)
-;  (if (good-enough? guess x)
-;    guess
-;    (sqrt-iter (improve guess x) x)))
+(define (cube-iter guess x)
+  (if (good-enough? guess x)
+    guess
+    (cube-iter (improve guess x) x)))
 
-(define (sqrt-iter guess x)
-  (new-if (good-enough? guess x)
-	  guess
-	  (sqrt-iter (improve guess x) x)))
+(define (cube-root x)
+  (cube-iter 1.0 x))
 
-(define (sqrt x)
-  (sqrt-iter 1.0 x))
-;(print (new-if (= 2 3) 0 5))
-
-(print (sqrt 9))	;よくわからないけどまた無限ループらしい。new-ifで実行すると終わらない。
+(print (cube-root 27))
