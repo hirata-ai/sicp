@@ -17,4 +17,4 @@
 (define (cube-root x)
   (cube-iter 1.0 x))
 
-(print (cube-root 64))
+(print (cube-root 27))
